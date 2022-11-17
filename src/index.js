@@ -1,11 +1,12 @@
 const express = require('express');
 const globalConst = require('./const/globalConst');
 const routerConfig = require('./routes/routesIndex')
+const logger= require('morgan')
 
 const configApi = (app) => {
     app.use(express.json()); // permite que express entienda json
     app.use(express.urlencoded({ extended: true })); // permite que express entienda formularios enviados por post
-
+    app.use(logger('dev'))
     return;
 }
 
@@ -24,16 +25,3 @@ const init = () => {
 
 
 init();
-
-
-// app.get('/', function (req, res) {
-//     res.send('Hola Mundo desde express.');
-// })
-
-// app.get('/:nombre', function (req, res) {
-//     res.send('Hola '+ req.params.nombre);
-// })
-
-// app.post('/', function (req, res) {
-//     res.send('Hola '+ req.body.nombre);
-// })
