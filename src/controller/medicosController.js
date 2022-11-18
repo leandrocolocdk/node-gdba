@@ -1,29 +1,53 @@
+
+const models = require('../database/models/index')
+
 module.exports = {
-    listar: (req, res) => {
+    listar: async (req, res) => {
         try {
+            const medicos = await models.medico.findAll();
+
             res.json({
-                message: "Listado de Medicos"
+                succes: true,
+                message: "Listado de Medicos",
+                data: {
+                    medicos: medicos
+                }
             })
         } catch (err) {
             console.log(err)
         }
     },
 
-    crear: (req, res) => {
+    crear: async (req, res) => {
         try {
+            const medico = await models.medico.create(req.body)
+
             res.json({
-                message: "Medico creado con exito"
+                succes: true,
+                message: "Medico creado con exito",
+                data: {
+                    id: medico.id
+                }
             })
         } catch (err) {
             console.log(err)
         }
     },
 
-    listarInfo: (req, res) => {
-        const id = req.params.idMedico;
+    listarInfo: async (req, res) => {
         try {
+            const id = req.params.idMedico;
+            const medico = await models.medico.findOne({
+                where: {
+                    id: req.params.idMedico
+                }
+            });
             res.json({
-                message: "Informacion del Médico" + id
+                succes: true,
+                message: "Informacion del Médico " + id,
+                data: {
+                    medico: medico
+                }
             })
         } catch (err) {
             console.log(err)

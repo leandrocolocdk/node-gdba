@@ -1,7 +1,7 @@
 const express = require('express');
 const globalConst = require('./const/globalConst');
 const routerConfig = require('./routes/routesIndex')
-const logger= require('morgan')
+const logger = require('morgan')
 
 const configApi = (app) => {
     app.use(express.json()); // permite que express entienda json
@@ -20,7 +20,7 @@ const init = () => {
     configRouter(app);
 
     app.listen(globalConst.PORT)
-    console.log("Aplicacion se está escuchando en el puerto: "+ globalConst.PORT);
+    console.log("Aplicacion se está escuchando en el puerto: " + globalConst.PORT);
 }
 
 
