@@ -1,5 +1,5 @@
 module.exports = {
-    listar: async (req, res) => {
+    listar: (req, res) => {
         try {
             res.json({
                 message: "Listado de Pacientes"
@@ -9,11 +9,11 @@ module.exports = {
         }
     },
 
-    crear: async (req, res) => {
+    crear: (req, res) => {
 
     },
 
-    listarInfo: async (req, res) => {
+    listarInfo: (req, res) => {
         const id = req.params.idPaciente;
         try {
             res.json({
