@@ -1,5 +1,6 @@
 
 const models = require('../database/models/index')
+const errors = require('../const/error');
 
 module.exports = {
     listar: async (req, res) => {
@@ -34,7 +35,7 @@ module.exports = {
         }
     },
 
-    listarInfo: async (req, res) => {
+    listarInfo: async (req, res, next) => {
         try {
             const id = req.params.idMedico;
             const medico = await models.medico.findOne({
@@ -42,6 +43,9 @@ module.exports = {
                     id: req.params.idMedico
                 }
             });
+
+            if (!medico) return next(errors.MedicoInexistente)
+
             res.json({
                 succes: true,
                 message: "Informacion del Médico " + id,
