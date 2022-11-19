@@ -2,10 +2,12 @@
 const router = require('express').Router();
 
 const medicosController = require('../controller/medicosController');
+const validate = require('../middlewares/validate');
+const medicoScheme= require('../middlewares/schemes/medico.scheme')
 
 router.get('/', medicosController.listar)
-router.post('/', medicosController.crear)
+router.post('/', validate(medicoScheme.crearMedico),medicosController.crear)
 
-router.get('/:idMedico', medicosController.listarInfo)
+router.get('/:idMedico',  medicosController.listarInfo)
 
-module.exports = router
+module.exports = router;
