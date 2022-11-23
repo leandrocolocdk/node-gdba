@@ -3,9 +3,16 @@ const models = require('../database/models/index')
 const errors = require('../const/error');
 
 module.exports = {
-    listar: async (req, res) => {
+    listar: async (req, res,next) => {
         try {
-            const medicos = await models.medico.findAll();
+            const medicos = await models.medico.findAll({
+                include: [{
+                    model: models.tratamiento,
+                    include: [{
+                        model: models.paciente
+                    }]
+                }]
+            });
 
             res.json({
                 succes: true,
@@ -16,10 +23,11 @@ module.exports = {
             })
         } catch (err) {
             console.log(err)
+            next(err)
         }
     },
 
-    crear: async (req, res) => {
+    crear: async (req, res,next) => {
         try {
             const medico = await models.medico.create(req.body)
 
@@ -32,6 +40,7 @@ module.exports = {
             })
         } catch (err) {
             console.log(err)
+            next(err)
         }
     },
 
@@ -40,8 +49,15 @@ module.exports = {
             const id = req.params.idMedico;
             const medico = await models.medico.findOne({
                 where: {
-                    id: req.params.idMedico
-                }
+                    id: req.params.idMedico,
+                    
+                },
+                include: [{
+                    model: models.tratamiento,
+                    include: [{
+                        model: models.paciente
+                    }]
+                }]
             });
 
             if (!medico) return next(errors.MedicoInexistente)
