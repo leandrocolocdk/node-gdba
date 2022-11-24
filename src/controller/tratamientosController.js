@@ -10,8 +10,15 @@ module.exports = {
         }
     },
 
-    crear: (req, res,next) => {
+    crear: async (req, res,next) => {
         try {
+            const paciente = await models.tratamiento.create(req.body);
+
+            await models.tratamiento.create({
+                pacienteId: paciente.id,
+                medicoId: req.body.medicoId
+            })
+
             res.json({
                 message: "Tratamientos creado con exito"
             })

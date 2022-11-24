@@ -12,5 +12,10 @@ module.exports = {
     'MedicoInexistente': {
         code: 1002,
         message: 'El medico no existe'
+    },
+
+    'PacienteInexistente': {
+        code: 1003,
+        message: 'El paciente no existe'
     }
 }

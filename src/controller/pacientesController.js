@@ -1,6 +1,6 @@
 
 const models = require('../database/models/index');
-
+const errors = require('../const/error');
 
 module.exports = {
     listar: async (req, res, next) => {
@@ -65,6 +65,8 @@ module.exports = {
                     }]
                 }]
             })
+            if (!paciente) return next(errors.PacienteInexistente)
+
             res.json({
                 success: true,
                 data: {
@@ -74,6 +76,39 @@ module.exports = {
         } catch (err) {
             console.log(err)
             next(err)
+        }
+    },
+
+    editar: async (req, res, next) => {
+        try {
+            const paciente = await models.paciente.findByPk(req.body,req.params.id);
+            !paciente
+                ? res.status(200).json({ message: "No existe paciente con ese ID" })
+                : res.status(200).json(paciente);
+        } catch (err) {
+            console.log(err)
+            next(err);
+        }
+    },
+
+    eliminar: async (req, res, next) => {
+        try {
+        const id = req.params.id;
+            const entry = await models.paciente.destroy({
+                where: {
+                  id,
+                },
+              });
+
+            if (!entry) {
+                res.status(200).json({ message: "No existe paciente con ese ID" });
+            }
+
+            await deleteById(id);
+            res.status(200).json({ message: "Paciente eliminado" });
+        } catch (err) {
+            console.log(err)
+            next(err);
         }
     },
 
