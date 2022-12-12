@@ -2,14 +2,25 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-  let Paciente = sequelize.define('paciente', {
+  let ArchivoUsuario = sequelize.define('archivo_usuario', {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
       allowNull: false
     },
-    obraSocial: {
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    file: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    dni: {
+      type: DataTypes.INTEGER,
+    },
+    original_name: {
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -34,15 +45,10 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
   })
 
-  Paciente.associate = models => {
-    Paciente.hasMany(models.tratamiento)
-    Paciente.belongsTo(models.usuario)
-
-    
+  ArchivoUsuario.associate = models => {
+    ArchivoUsuario.belongsTo(models.usuario) // pertenece
   }
 
-  return Paciente
+  return ArchivoUsuario
 
 }
-
-

@@ -2,16 +2,16 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-  let Paciente = sequelize.define('paciente', {
+  let Role = sequelize.define('role', {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
       allowNull: false
     },
-    obraSocial: {
+    nombre: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -34,15 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
   })
 
-  Paciente.associate = models => {
-    Paciente.hasMany(models.tratamiento)
-    Paciente.belongsTo(models.usuario)
-
-    
+  Role.associate = models => {
+    // Role.hasMany(models.usuario)
   }
 
-  return Paciente
-
+  return Role
 }
-
 

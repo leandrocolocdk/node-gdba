@@ -1,9 +1,19 @@
+const models = require('../database/models/index');
+const errors = require('../const/error');
+
 module.exports = {
-    listar: (req, res,next) => {
+    listar: async (req, res,next) => {
         try {
+            const tratamientos = await models.tratamiento.findAll()
+
             res.json({
-                message: "Listado de Tratamientos"
+                success: true,
+                data: {
+                    message: "Listado de Tratamientos",
+                    tratamientos: tratamientos
+                }
             })
+
         } catch (err) {
             console.log(err)
             next(err)
@@ -12,15 +22,18 @@ module.exports = {
 
     crear: async (req, res,next) => {
         try {
-            const paciente = await models.tratamiento.create(req.body);
 
-            await models.tratamiento.create({
-                pacienteId: paciente.id,
+            const tratamiento = await models.tratamiento.create({
+                pacienteId: req.body.pacienteId,
                 medicoId: req.body.medicoId
             })
 
             res.json({
-                message: "Tratamientos creado con exito"
+                success: true,
+                data: {
+                    message: "Tratamientos creado con exito",
+                    tratamiento: tratamiento
+                }
             })
         } catch (err) {
             console.log(err)
@@ -28,11 +41,42 @@ module.exports = {
         }
     },
 
-    listarInfo: (req, res,next) => {
-        const id = req.params.idTratamiento;
+    listarInfo: async (req, res,next) => {
+        try {
+            const id = req.params.idTratamiento;
+            const tratamiento = await models.tratamiento.findOne({
+                where:{ id: id}
+            })
+            if (!tratamiento) return next(errors.TratamientoInexistente);
+
+            res.json({
+                success: true,
+                data: {
+                    message: "Tratamiento " + id,
+                    tratamiento: tratamiento
+                }
+            })
+        } catch (err) {
+            console.log(err)
+            next(err)
+        }
+    },
+
+    listarXMedicos: (req, res,next) => {
         try {
             res.json({
-                message: "Informacion del Tratamiento " + id
+                message: "Tratamientos para el medico"
+            })
+        } catch (err) {
+            console.log(err)
+            next(err)
+        }
+    },
+
+    listarXPaciente: (req, res,next) => {
+        try {
+            res.json({
+                message: "Tratamientos para el usuario"
             })
         } catch (err) {
             console.log(err)

@@ -1,5 +1,5 @@
 'use strict';
-const models = require("../models/index");
+const models = require("../../models/index");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

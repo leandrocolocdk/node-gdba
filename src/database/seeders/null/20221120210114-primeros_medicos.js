@@ -1,6 +1,6 @@
 'use strict';
 
-const models = require("../models/index");
+const models = require("../../models/index");
 
 // NOTA Primero se tienen que insertar los medicos!!
 

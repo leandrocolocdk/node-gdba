@@ -1,39 +1,25 @@
-'use strict' 
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
 
-  let Medico = sequelize.define('medico', { 
+  let Medico = sequelize.define('medico', {
     id: {
-      type: DataTypes.BIGINT, 
-      autoIncrement: true, 
-      primaryKey: true,  
-      allowNull: false 
-    },
-    nombre: { 
-      type: DataTypes.STRING, 
-      allowNull: false 
-    },
-    apellido: {
-      type: DataTypes.STRING,
+      type: DataTypes.BIGINT,
+      autoIncrement: true,
+      primaryKey: true,
       allowNull: false
-    },
-    dni: {
-      type: DataTypes.INTEGER,
-    },
-    email: {
-      type: DataTypes.STRING,
     },
     especialidad: {
       type: DataTypes.STRING,
     },
-    tiempo_trabajando:{
+    tiempo_trabajando: {
       type: DataTypes.INTEGER,
     },
-    createdAt: { 
-      type: DataTypes.DATE, 
-      field: 'created_at', 
-      defaultValue: DataTypes.NOW, 
-      allowNull: false 
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+      defaultValue: DataTypes.NOW,
+      allowNull: false
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -41,17 +27,19 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.NOW,
       allowNull: false
     },
-    deletedAt: { 
+    deletedAt: {
       type: DataTypes.DATE,
       field: 'deleted_at'
     }
   }, {
-    paranoid: true, 
-    freezeTableName: true, 
+    paranoid: true,
+    freezeTableName: true,
   })
 
   Medico.associate = models => {
     Medico.hasMany(models.tratamiento)
+    Medico.belongsTo(models.usuario)
+
   }
 
   return Medico

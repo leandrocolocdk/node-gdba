@@ -4,7 +4,8 @@ const routerConfig = require('./routes/routesIndex')
 const logger = require('morgan')
 
 const errorHandler = require('./middlewares/error');
-const createError = require('http-errors')
+const createError = require('http-errors');
+const { Router } = require('express');
 
 const configApi = (app) => {
     app.use(express.json()); // permite que express entienda json
@@ -15,7 +16,8 @@ const configApi = (app) => {
 
 const configRouter = (app) => {
     app.use('/api', routerConfig.rutasInit());
-
+    app.use('/', routerConfig.rutasAuth());
+    
     app.use(function (req, res, next) {
         next(createError(404))
     })

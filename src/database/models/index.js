@@ -36,5 +36,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 sequelize.sync(); // sincroniza los modelos a la BD
+// sequelize.sync({force:true}); // borra la bd y la vuelve a crear
 
 module.exports = db;
